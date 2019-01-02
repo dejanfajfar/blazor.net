@@ -1,0 +1,46 @@
+﻿@page "/phonenumber"
+@page "/phonenumber/{phoneNo}"
+@layout MasterLayout
+
+
+<div>
+    <h1>Please enter your phonenumber</h1>
+
+    <div class="phonenumber">
+        @Number
+    </div>
+
+    <button onclick="@Increment">Increment...</button>
+    <button onclick="@Decrement">Decrement...</button>
+</div>
+
+@functions {
+
+    [Parameter]
+    private string PhoneNo { get; set; } = string.Empty;
+
+    private long Number { get; set; } = 0L;
+
+    protected override void OnParametersSet()
+    {
+        base.OnParametersSet();
+        if (PhoneNo != string.Empty)
+        {
+            if (long.TryParse(PhoneNo, out long parsedNumber))
+            {
+                Number = parsedNumber;
+            }
+        }
+    }
+
+    public void Increment()
+    {
+        Number++;
+
+    }
+
+    public void Decrement()
+    {
+        Number--;
+    }
+}

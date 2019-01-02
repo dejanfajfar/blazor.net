@@ -1,0 +1,55 @@
+﻿@page "/clock"
+@layout MasterLayout
+@using System.Threading
+
+<p>
+    @currentTime
+</p>
+
+<br/>
+
+<p class="binary">
+    @binaryHours.PadLeft(6, '0')
+</p>
+<p class="binary">
+    @binaryMinutes.PadLeft(6, '0')
+</p>
+<p class="binary">
+    @binarySeconds.PadLeft(6, '0')
+</p>
+
+@functions {
+    string currentTime = "...";
+    string binaryHours = "";
+    string binaryMinutes = "";
+    string binarySeconds = "";
+    Timer timer;
+
+    protected override async Task OnInitAsync()
+    {
+        timer = new Timer(state =>
+        {
+            var now = DateTime.Now;
+            currentTime = now.ToLongTimeString();
+
+            binaryHours = IntToBinaryString(now.Hour);
+            binaryMinutes = IntToBinaryString(now.Minute);
+            binarySeconds = IntToBinaryString(now.Second);
+
+            this.StateHasChanged();
+        }, null, 1000, 1000);
+    }
+
+    public string IntToBinaryString(int number)
+    {
+        const int mask = 1;
+        var binary = string.Empty;
+        while(number > 0)
+        {
+            binary = (number & mask) + binary;
+            number = number >> 1;
+        }
+
+        return binary;
+    }
+}

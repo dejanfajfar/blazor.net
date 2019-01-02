@@ -1,0 +1,91 @@
+﻿@import url('https://fonts.googleapis.com/css?family=Roboto');
+@import url('https://fonts.googleapis.com/css?family=Share+Tech+Mono');
+
+html {
+    font-family: Verdana, Geneva, Tahoma, sans-serif
+}
+
+body {
+    background-color: #fffefe;
+    margin: 0;
+}
+
+myapp {
+    width: inherit;
+}
+
+header {
+    height: 40px;
+    background-color: #F9B7C9;
+    border-bottom: solid 2px #F55A85;
+}
+
+header em {
+    font-size: x-large;
+    font-weight: 700;
+    font-style: normal;
+    margin-right: 30px;
+}
+
+header span:before {
+    content: "["
+}
+
+header span:after {
+    content: "]"
+}
+
+header span:hover {
+    text-decoration: underline;
+}
+
+header a {
+    color: #4a363c;
+    text-decoration: none;
+}
+
+nav {
+    display: inline;
+}
+
+nav .active {
+    font-weight: 700;
+}
+
+nav .active span:after {
+    content: "<"
+}
+
+nav .active span:before {
+    content: ">"
+}
+
+#body {
+    padding: 20px;
+    color: #634950;
+}
+
+#loading_img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+}
+
+.phonenumber {
+    font-family: Roboto, sans-serif;
+    font-size: xx-large;
+    font-weight: 100;
+    margin: 10px;
+    border: 2px solid #f9b7c9;
+    background-color: #fdf0f4;
+    border-radius: 5px;
+    padding: 5px;
+}
+
+.binary {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 100px;
+    color: #f37094;
+    margin: 0;
+}
