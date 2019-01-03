@@ -89,3 +89,21 @@ nav .active span:before {
     color: #f37094;
     margin: 0;
 }
+
+.todo_details {
+    margin: 10px;
+    border: 2px solid #f9b7c9;
+    background-color: #fdf0f4;
+    border-radius: 5px;
+    padding: 5px;
+}
+
+.todo_details em {
+    font-family: Roboto, sans-serif;
+    font-size: xx-large;
+    font-weight: 100;
+}
+
+.todo_details p {
+    font-size: small;
+}

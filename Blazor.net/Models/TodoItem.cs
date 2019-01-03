@@ -7,5 +7,8 @@ namespace Blazor.net.Models
 {
     public class TodoItem
     {
+        public string Message { get; set; }
+        public DateTime CreatedAt { get; set; }
+        public Guid Id { get; set; }
     }
 }
