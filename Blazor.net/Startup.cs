@@ -1,20 +1,17 @@
-using Blazor.net.Services;
-using Microsoft.AspNetCore.Blazor.Builder;
+using Microsoft.AspNetCore.Components.Builder;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Blazor.net
+namespace Blazor.Net
 {
     public class Startup
     {
-        public void ConfigureServices(IServiceCollection serviceCollection)
+        public void ConfigureServices(IServiceCollection services)
         {
-            serviceCollection.AddSingleton<IBinaryFormatterService>(new BinaryFormatterService());
-            serviceCollection.AddSingleton<IToDoService>(new ToDoService());
         }
 
-        public void Configure(IBlazorApplicationBuilder blazorApplicationBuilder)
+        public void Configure(IComponentsApplicationBuilder app)
         {
-            blazorApplicationBuilder.AddComponent<MyApp>("myApp");
+            app.AddComponent<App>("app");
         }
     }
 }
