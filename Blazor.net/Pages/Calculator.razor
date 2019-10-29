@@ -1,0 +1,132 @@
+﻿@page "/calculator"
+
+<div class="jumbotron jumbotron-fluid">
+    <div class="container">
+        <h1 class="display-4">Simple calculator</h1>
+        <p class="lead">Demonstrating UI events and DOM interactions without JS</p>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <div class="container">
+                <div class="row">
+                    <div class="col">
+                        <button class="btn btn-secondary m-2" @onclick="@(e => BufferOperand(1))">1</button>
+                        <button class="btn btn-secondary m-2" @onclick="@(e => BufferOperand(2))">2</button>
+                        <button class="btn btn-secondary m-2" @onclick="@(e => BufferOperand(3))">3</button>
+                    </div>
+                    <div class="col">
+                        <button class="btn btn-danger btn-lg m-1" @onclick="OnC">C</button>
+                        <button class="btn btn-danger btn-lg m-1" @onclick="OnCe">CE</button>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <button class="btn btn-secondary m-2" @onclick="@(e => BufferOperand(4))">4</button>
+                        <button class="btn btn-secondary m-2" @onclick="@(e => BufferOperand(5))">5</button>
+                        <button class="btn btn-secondary m-2" @onclick="@(e => BufferOperand(6))">6</button>
+                    </div>
+                    <div class="col">
+                        <button class="btn btn-primary btn-lg" @onclick="@(e => setOperation(Operation.Add))">+</button>
+                        <button class="btn btn-primary btn-lg" @onclick="@(e => setOperation(Operation.Subtract))">-</button>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <button class="btn btn-secondary m-2" @onclick="@(e => BufferOperand(7))">7</button>
+                        <button class="btn btn-secondary m-2" @onclick="@(e => BufferOperand(8))">8</button>
+                        <button class="btn btn-secondary m-2" @onclick="@(e => BufferOperand(9))">9</button>
+                    </div>
+                    <div class="col">
+                        <button class="btn btn-primary btn-lg" @onclick="@(e => setOperation(Operation.Multiply))">*</button>
+                        <button class="btn btn-primary btn-lg" @onclick="@(e => setOperation(Operation.Divide))">/</button>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <button class="btn btn-secondary btn-block m-2" @onclick="@(e => BufferOperand(0))">0</button>
+                    </div>
+                    <div class="col">
+                        <button class="btn btn-warning btn-block btn-lg" @onclick="Solve">=</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <h3>@_operandBuffer</h3>
+            <h3 class="text-muted">@_calculationLine</h3>
+        </div>
+    </div>
+</div>
+
+@code {
+    private string _operandBuffer = "";
+    private string _calculationLine = "";
+    private IList<string> _pastCalculations = new List<string>();
+    private int _operand1;
+    private int _operand2;
+    private Func<int, int, decimal> _operationFunction = (op1, op2) => 0;
+
+    enum Operation : ushort
+    {
+        Add,
+        Subtract,
+        Divide,
+        Multiply
+    }
+
+    private void setOperation(Operation operation)
+    {
+        _operand1 = int.Parse(_operandBuffer);
+        _calculationLine += _operand1;
+        OnC();
+        switch (operation)
+        {
+            case Operation.Multiply:
+                _operationFunction = (op1, op2) => op1 * op2;
+                _calculationLine += " * ";
+                break;
+            case Operation.Subtract:
+                _operationFunction = (op1, op2) => op1 - op2;
+                _calculationLine += " - ";
+                break;
+            case Operation.Divide:
+                _operationFunction = (op1, op2) => op1 / (decimal)op2;
+                _calculationLine += " / ";
+                break;
+            default:
+                _operationFunction = (op1, op2) => op1 + op2;
+                _calculationLine += " + ";
+                break;
+        }
+    }
+
+    private void Solve()
+    {
+        _operand2 = int.Parse(_operandBuffer);
+        OnC();
+        var solution = _operationFunction(_operand1, _operand2);
+        _calculationLine = $"{_calculationLine}{_operand2} = {solution}";
+    }
+
+    private void OnC()
+    {
+        _operandBuffer = string.Empty;
+    }
+
+    private void OnCe()
+    {
+        OnC();
+        _operand1 = 0;
+        _operand2 = 0;
+        _operationFunction = (op1, op2) => 0;
+        _calculationLine = string.Empty;
+    }
+
+    public void BufferOperand(int number)
+    {
+        this._operandBuffer += number;
+    }
+}
